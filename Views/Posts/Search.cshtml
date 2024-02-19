@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Search Posts</h2>
+
+<form asp-action="Search" method="get">
+
+    <input type="search" name="searchQuery" value=@Model.searchQuery />
+    <input type="submit" value="Search" />
+    <input type="hidden" name="pageNumber" value=@Model.pageNumber />
+    <input type="submit"  value="Next Page" />
+</form>
+
+<style>
+    .post-container {
+        border: 1px solid #ddd; /* Light grey border */
+        border-radius: 8px; /* Rounded corners */
+        padding: 20px; /* Padding inside the container */
+        margin-bottom: 20px; /* Space between post containers */
+        background-color: #f9f9f9; /* Light background color */
+    }
+    .post-title {
+        color: #333; /* Dark grey color for text */
+        margin-bottom: 10px; /* Space below the title */
+    }
+    .post-description {
+        color: #333; /* Medium grey color for text */
+        margin-bottom: 10px; /* Space below the description */
+    }
+    .post-meta {
+        color: #333; /* Light grey color for metadata */
+        font-size: 0.9rem; /* Smaller font size for metadata */
+        margin-bottom: 5px; /* Space below each piece of metadata */
+    }
+</style>
+
+
+
+@if (Model != null && Model.Posts.Count > 0)
+{
+   
+    <div>
+        <form asp-action="Search" method="get">
+            
+        </form>
+        @foreach (var post in Model.Posts)
+        {
+            <div class="post-container">
+                <h3 class="post-title">@post.Title</h3>
+                <p class="post-description">@post.DescriptionPreview</p><br />
+                <p class="post-meta">Votes: @post.TotalVotes</p><br />
+                <p class="post-meta">Answers: @post.AnswerCount</p><br />
+                <p class="post-meta">User: @post.UserName (Reputation: @post.Reputation) - Badges: @post.Badges</p>
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <p>No results found.</p>
+}

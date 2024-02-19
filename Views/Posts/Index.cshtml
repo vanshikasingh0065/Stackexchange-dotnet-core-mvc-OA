@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Search Posts";
+}
+
+<h2>Search Posts</h2>
+
+<form asp-action="Search" method="get">
+    <div class="form-group">
+        <input type="text" name="query" class="form-control" placeholder="Enter search terms..." />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <div>
+        @foreach (var post in Model)
+        {
+            <div>
+                <h3>@post.Title</h3>
+                <p>@post.DescriptionPreview</p>
+                <p>Answers: @post.AnswerCount</p>
+                <p>User: @post.UserName (@post.Reputation) - Badges: @post.Badges</p>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No results found.</p>
+}

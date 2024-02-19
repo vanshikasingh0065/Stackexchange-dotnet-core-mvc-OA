@@ -1,0 +1,52 @@
+﻿@model CahootSOOA.Models.SearchViewModel
+
+<form method="get">
+    <input type="text" name="searchQuery" value="" placeholder="Search..." />
+    <button type="submit">Search</button>
+</form>
+
+@if (Model.Posts.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>Votes</th>
+                <th>Badges</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in Model.Posts)
+            {
+                <tr>
+                    <td>@post.Title</td>
+                    @* <td>@post.DescriptionPreview</td>
+                    <td>@post.UserName</td>
+                    <td>@post.TotalVotes</td>
+                    <td>@post.BadgeNames</td> *@
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No results found.</p>
+}
+
+<!-- Pagination -->
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { searchQuery = Model.SearchQuery, pageNumber = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
